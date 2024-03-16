@@ -1,69 +1,83 @@
-//Writing Function for Creating Div Element
-function div(tagname, atname, atvalue, content) {
-    const ele = document.createElement(tagname);
-    ele.setAttribute(atname, atvalue);
-    ele.innerHTML = content;
-    return ele;
+// Writing Functions For Creating Elements
+function buttn(tagname, atname, atvalue, content) {
+  const b = document.createElement(tagname);
+  b.setAttribute(atname, atvalue);
+  b.innerHTML = content;
+  return b;
 }
-// Writing Functions For Creating Button Elements
-function buttn(tagname, atname, atvalue, atnam1, atvalue1, content) {
-    const b = document.createElement(tagname);
-    b.setAttribute(atname, atvalue);
-    b.setAttribute(atnam1, atvalue1);
-    b.innerHTML = content;
-    return b;
+// Calculator
+const container = buttn("div", "class", "container", "");
+const calculator = buttn("div", "class", "calculator", "");
+const displayInput = document.createElement("input");
+displayInput.setAttribute("type", "text");
+displayInput.setAttribute("placeholder", "0");
+displayInput.setAttribute("id", "eval");
+
+// //Creating buttons
+const bCl = buttn("button", "onclick", "Clear()", "Cl");
+const bDel = buttn("button", "onclick", "del()", "Del");
+const bRemainder = buttn("button", "onclick", "display('%')", "%");
+const bDivision = buttn("button", "onclick", "display('/')", "/");
+const b7 = buttn("button", "onclick", "display('7')", "7");
+const b8 = buttn("button", "onclick", "display('8')", "8");
+const b9 = buttn("button", "onclick", "display('9')", "9");
+const bMultiplication = buttn("button", "onclick", "display('*')", "*");
+const b4 = buttn("button", "onclick", "display('4')", "4");
+const b5 = buttn("button", "onclick", "display('5')", "5");
+const b6 = buttn("button", "onclick", "display('6')", "6");
+const bSubration = buttn("button", "onclick", "display('-')", "-");
+const b1 = buttn("button", "onclick", "display('1')", "1");
+const b2 = buttn("button", "onclick", "display('2')", "2");
+const b3 = buttn("button", "onclick", "display('3')", "3");
+const bAddition = buttn("button", "onclick", "display('+')", "+");
+const bDecimal = buttn("button", "onclick", "display('.')", ".");
+const b0 = buttn("button", "onclick", "display('0')", "0");
+const bEqual = buttn("button", "onclick", "Calculate()", "=");
+
+calculator.append(
+  displayInput,
+  bCl,
+  bDel,
+  bRemainder,
+  bDivision,
+  b7,
+  b8,
+  b9,
+  bMultiplication,
+  b4,
+  b5,
+  b6,
+  bSubration,
+  b1,
+  b2,
+  b3,
+  bAddition,
+  bDecimal,
+  b0,
+  bEqual
+);
+container.append(calculator);
+document.body.append(container);
+
+//Evaluate
+let result = document.getElementById("eval");
+
+function display(num) {
+  result.value += num;
 }
-// Creating Calculator Display
-const cal = div("div", "class", "calculator", " ");
-const caldisplay = div("div", "id", "cal-display", "");
-const h1 = div("h1", "id", "displayNo", "");
 
-//Creating buttons
-const allbuttons = div("div", "class", "all-btns", "");
-const b7 = buttn("button", "class", "nos", "id", "7", "7");
-const b8 = buttn("button", "class", "nos", "id", "8", "8");
-const b9 = buttn("button", "class", "nos", "id", "9", "9");
-const division = buttn("button", "class", "nos", "id", "/", "/");
-const b4 = buttn("button", "class", "nos", "id", "4", "4");
-const b5 = buttn("button", "class", "nos", "id", "5", "5");
-const b6 = buttn("button", "class", "nos", "id", "6", "6");
-const multiplication = buttn("button", "class", "nos", "id", "*", "*");
-const b1 = buttn("button", "class", "nos", "id", "1", "1");
-const b2 = buttn("button", "class", "nos", "id", "2", "2");
-const b3 = buttn("button", "class", "nos", "id", "3", "3");
-const subtraction = buttn("button", "class", "nos", "id", "-", "-");
-const bclear = buttn("button", "class", "btn-clear", "id", "clear", "C");
-const b0 = buttn("button", "class", "nos", "id", "0", "0");
-const equalto = buttn("button", "class", "btn-equal", "id", "equal-sign", "=");
-const addition = buttn("button", "class", "nos", "id", "+", "+");
+function Calculate() {
+  try {
+    result.value = eval(result.value);
+  } catch (error) {
+    alert("Invalid Number");
+  }
+}
 
+function Clear() {
+  result.value = "";
+}
 
-allbuttons.append(b7, b8, b9, division, b4, b5, b6, multiplication, b1, b2, b3, subtraction, bclear, b0, equalto, addition);
-caldisplay.append(h1);
-cal.append(caldisplay, allbuttons);
-document.body.append(cal);
-
-//let result = document.getElementById('displayNo');
-let but = Array.from(document.getElementsByTagName('button'));
-
-
-but.map(button => {
-
-    button.addEventListener('click', (e) => {
-        switch (e.target.innerText) {
-            case "C":
-                h1.innerText = "";
-                // h1.innerText = "0";
-                break;
-            case "=":
-                try {
-                    h1.innerText = eval(h1.innerText);
-                } catch {
-                    alert("Only numbers");
-                }
-                break;
-            default:
-                h1.innerText += e.target.innerText;
-        }
-    });
-});
+function del() {
+  result.value = result.value.slice(0, -1);
+}
